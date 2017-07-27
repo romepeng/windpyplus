@@ -1,0 +1,1 @@
+D:\Anaconda3\envs\windpyplus\python.exe "C:\Wind\Wind.NET.Client\WindNET\bin\installWindPy.py" "C:\Wind\Wind.NET.Client\WindNET"

@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""Main module."""
-#import sys
-#sys.path.append(" D:\\windpyplus")
-
-#import site; site.getsitepackages()
 import pandas as pd
 
-import windpyplus
-
-#from windpyplus.stockSector.StockSector import allAstock, MSCIAStock
+from windpyplus.utils.tradedate import tradedate
+from windpyplus.stockSector.StockSector import allAstock, MSCIAStock
 from windpyplus.fundamental.foreCastWind import foreCastWind
 from windpyplus.utils.convertToWindCode import convertBQCode, convertCode
 from windpyplus.utils.dfToExcel import dftoSameWorkbook, dfToExcel
@@ -34,8 +28,8 @@ def fiter_ForecastValucation(qt = '20170630', CHG_MIN= 7):
     return df_f
 
 if __name__ == '__main__':
-
-    df =fiter_ForecastValucation(CHG_MIN= 10)
+    print(tradedate())
+    df =fiter_ForecastValucation(CHG_MIN= 1000)
     print(df)
 
-    print(tradedate(0))
+    

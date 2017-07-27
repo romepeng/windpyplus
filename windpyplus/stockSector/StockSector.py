@@ -1,4 +1,4 @@
-from iwindpy_plus.utils.tradedate import tradedate
+from ..utils.tradedate import tradedate
 import pandas as pd 
 from WindPy import w 
 w.start()

@@ -1,2 +1,3 @@
-import tushare as ts
+from WindPy import w
+w.start()
 
