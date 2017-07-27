@@ -14,5 +14,5 @@ from windpyplus.stockSector.StockSector import allAstock
 
 allstocks = list(allAstock().index.values)
 print(tradedate())
-#print(performance_express(list(allAstock().index.values)))
+#print(performance_express(allstocks))
 print(financial_report(allstocks))
