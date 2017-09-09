@@ -3,11 +3,12 @@ w.start()
 import pandas as pd
 import subprocess
 
-from windpyplus.utils.tradedate import tradedate
-from windpyplus.utils import remind as rm
+from ..utils.tradedate import tradedate
+from ..utils import remind as rm
 
 def financialDataWind(stocklists):
-    data = w.wss(stocklists, "roe_avg,roe_basic,roe_diluted,roe_deducted,roe_exbasic,roa2,roic,netprofitmargin,grossprofitmargin,deductedprofittoprofit,ocftocf,ocftosales,debttoassets,deducteddebttoassets,current,quick,cashtocurrentdebt,longdebttodebt,arturn,faturn,yoy_tr,yoy_or,yoyprofit,yoynetprofit,yoynetprofit_deducted,yoyocf,yoyroe,yoy_equity,tot_oper_rev,net_profit_is,tot_profit,np_belongto_parcomsh,net_cash_flows_oper_act","rptDate=20161231;unit=1;rptType=1")
+    field = ["sec_name,roe_avg,roe_basic,roe_diluted,roe_deducted,roe_exbasic,roa2,roic,netprofitmargin,grossprofitmargin,deductedprofittoprofit,ocftocf,ocftosales,debttoassets,deducteddebttoassets,current,quick,cashtocurrentdebt,longdebttodebt,arturn,faturn,yoy_tr,yoy_or,yoyprofit,yoynetprofit,yoynetprofit_deducted,yoyocf,yoyroe,yoy_equity,tot_oper_rev,net_profit_is,tot_profit,np_belongto_parcomsh,net_cash_flows_oper_act"]
+    data = w.wss(stocklists, field, "rptDate=20161231;unit=1;rptType=1")
     df = pd.DataFrame(data.Data, columns=data.Codes, index=data.Fields).T
     print(df.head())
     return df
@@ -19,8 +20,9 @@ def dfToExcel(df, filename):
 
 def ROE_filter(stocklists, ROE_limit = 7.0):
     df = financialDataWind(stocklists)
-    df = df[(df['ROA2'] > 7.0)  & (df['ROE_DEDUCTED'] > ROE_limit)]
-    print("ROE and ROA2 > " + str(ROE_limit) + " Num:  {} ".format(len(df)))
+    #df = df[(df['ROA2'] > 7.0)  & (df['ROE_DEDUCTED'] > ROE_limit)]
+    df = df[df['ROE_DEDUCTED'] > ROE_limit]
+    print("ROE > " + str(ROE_limit) + " Num:  {} ".format(len(df)))
     return df.index.values
 
 def netProfit_filter(stocklists, netProfit_limit = 1.0e+8):
@@ -63,15 +65,15 @@ def growth_filter(stocklists, growth_min = 6):
     print("YOYNETPROFIT_DEDUCTED'> " + str(growth_min) + " Num:  {} ".format(len(stocks)))
     return stocks
 
-def multi_filter(stocklists):
+def multi_filter(stocklists,ROE_limit=8, growth_min=15, netProfit_limit=1.0e+8):
     roe_list = ROE_filter(stocklists, 8) 
-    cashflow_list = cashFlow_filter(stocklists)
+    #cashflow_list = cashFlow_filter(stocklists)
     growth_list = growth_filter(stocklists, 15)
     netProfit_list = netProfit_filter(stocklists)
-    result_list = [s for s in roe_list if s in cashflow_list]
-    result_list = [ s for s in result_list if s in growth_list]
+    #result_list = [s for s in roe_list if s in cashflow_list]
+    result_list = [ s for s in roe_list if s in growth_list]
     result_list = [s for s in result_list if s in netProfit_list]
-    print(len(result_list))
+    print("ROE>8, growth>15, netProfit>1.0e+8" + "Num: {} ".format(len(result_list)))
     return result_list
 
 if __name__ == '__main__':

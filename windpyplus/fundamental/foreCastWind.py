@@ -4,7 +4,7 @@ from windpyplus.utils.tradedate import tradedate
 from WindPy import w
 w.start()
 
-def foreCastWind(stocklists, reportDate = '20170630'):  
+def foreCastWind(stocklists, reportDate = '20170930'):  
     data = w.wss(stocklists, 
         "sec_name,profitnotice_style,profitnotice_lasteps,profitnotice_changemax,profitnotice_changemin,profitnotice_date,profitnotice_abstract,profitnotice_netprofitmin,profitnotice_netprofitmax,",
         "rptDate=" + str(reportDate))

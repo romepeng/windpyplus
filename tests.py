@@ -13,6 +13,7 @@ from windpyplus.fundamental.financialReport import financial_report
 from windpyplus.stockSector.StockSector import allAstock
 
 allstocks = list(allAstock().index.values)
+print(allstocks)
 print(tradedate())
 #print(performance_express(allstocks))
-print(financial_report(allstocks))
+#print(financial_report(allstocks))

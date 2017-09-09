@@ -13,3 +13,6 @@ def financial_report(stocks, rptdate='20170630'):
 	df = df.sort_values(by='STM_ISSUINGDATE', ascending=False)
 	print(len(df))
 	return df
+
+def financial_fastrep(stocks,rptdate='20170630'):
+	pass
